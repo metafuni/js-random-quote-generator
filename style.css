@@ -1,0 +1,84 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: background-color 1s;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.color, .bg-color {
+    transition: all 1s;;
+}
+
+#quote-box {
+    width: 550px;
+    height: auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.87);
+    text-align: center;
+    position: relative;
+}
+
+#new-quote {
+    padding: 10px 15px;
+    font-family: inherit;
+    font-size: 1.1rem;
+    outline: none;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 30px;
+    border: none;
+}
+
+#new-quote:hover, a:hover {
+    cursor: pointer;
+    opacity: .6;
+}
+
+[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+}
+
+[data-title]:after {
+    content: attr(data-title);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    padding: 1px 5px 2px 5px;
+    bottom: -1.75em;
+    left: 50%;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    box-shadow: 1px 1px 3px grey;
+    border: 1px solid black;
+    visibility: hidden;
+}
+
+[data-title] {
+    position: relative;
+}
+
+#author {
+    float: right;
+}
+
+#quote-box a, #quote-box a {
+    display: inline-block;
+    left: 0;
+    float: left;
+    margin-right: 5px;
+    text-decoration: none;
+    color: white;
+    min-width: 35px;
+    padding: 5px 7.5px;
+    border-radius: 3px;
+    background: rgba(173, 28, 28, 0.596);
+}

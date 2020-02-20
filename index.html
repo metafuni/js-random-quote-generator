@@ -1,0 +1,79 @@
+<!-- Random quotes from: https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Random Quote Generator</title>
+</head>
+
+<body class="bg-color">
+
+    <div id="quote-box">
+        <h1 id="text" class="color"><i class="fa fa-quote-left fa-pull-left"></i></h1>
+        <h3 id="author" class="color"></h3> <br> <br> <br> <br> <br>
+        <a href="https://twitter.com/intent/tweet?hashtags= freecodecamp&text=" id="tweet-quote"
+            data-title="Tweet this quote" class="bg-color"><i class="fa fa-twitter fa-2x"></i></a>
+        <!-- <a href="http://www.facebook.com" id="share-quote" data-title="Share this quote on your timeline"
+            class="bg-color"><i class="fa fa-facebook fa-2x"></i></a> -->
+        <button type="button" id="new-quote" class="bg-color">New Quote</button>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            // initial color
+            const $color = "#" + ((1 << 24) * Math.random() | 0).toString(16);
+            $('.color').css('color', $color);
+            $('.bg-color').css('background-color', $color);
+
+            // random color with quote and author
+            const newQuote = () => {
+                const $newcolor = "#" + ((1 << 24) * Math.random() | 0).toString(16);
+                $('.color').css('color', $newcolor);
+                $('.bg-color').css('background-color', $newcolor);
+
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json',
+                    dataType: 'json'
+                }).done(function (data) {
+
+                    var $index = Math.floor(Math.random() * data.quotes.length);
+
+                    if (!data.quotes[$index].author) {
+                        $('h3').text("Anonymous");
+                    } else {
+                        $('h1').html(data.quotes[$index].quote).prepend('<i class="fa fa-quote-left fa-pull-left"></i>');
+                        $('h3').html(data.quotes[$index].author);
+                    }
+                })
+            };
+
+            $('#new-quote').on('click', function () {
+                newQuote();
+            });
+
+            //tweet quote
+            $('#tweet-quote').on('click', function () {
+                var $quote = $('#text').text();
+                var $author = $('#author').text();
+                window.open('https://twitter.com/intent/tweet?hashtags= freecodecamp&text=' + encodeURIComponent($quote) + encodeURIComponent(' (' + $author + ')'));
+            });
+
+            //Call new quote function for initial DOM-render
+            newQuote();
+        });
+    </script>
+
+</body>
+
+</html>
